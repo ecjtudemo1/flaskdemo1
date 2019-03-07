@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}登录{% endblock %}
+{% block head %}
+{{ super() }}
+<title>登录</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<meta name="keywords" content="Flat Dark Web Login Form Responsive Templates, Iphone Widget Template, Smartphone login forms,Login form, Widget Template, Responsive Templates, a Ipad 404 Templates, Flat Responsive Templates" />
+
+<!--webfonts-->
+
+<link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+<!--//webfonts-->
+<script src="{{ url_for('static',filename='js/jquery-1.11.3.min.js') }}"></script>
+
+{% endblock %}
+
+{% block page_content %}
+<div class = "page-header">
+<script>$(document).ready(function(c) {
+	$('.close').on('click', function(c){
+		$('.login-form').fadeOut('slow', function(c){
+	  		$('.login-form').remove();
+		});
+	});
+});
+</script>
+ <!--SIGN UP-->
+ <h1>请登录售卖机管理系统</h1>
+<div class="login-form">
+	<div class="close"> </div>
+		<div class="head-info">
+			<label class="lbl-1"> </label>
+			<label class="lbl-2"> </label>
+			<label class="lbl-3"> </label>
+		</div>
+			<div class="clear"> </div>
+	<div class="avtar">
+		<img src="{{ url_for('static',filename='avtar.png') }}" alt="">
+	</div>
+			<form method="POST">
+                    <div>
+                    {% for msg in get_flashed_messages()  %}
+                    <p class="login-box-msg" style="color: red">{{ msg }}</p>
+                    {% endfor %}     {# flash的前端闪现 登录#}
+                    </div>
+                    {{ form.hidden_tag() }}
+					{{ form.account }}
+						<div class="key">
+					{{ form.pwd }}
+                        </div>
+                    <div class="signin">
+		            {{form.submit }}
+
+	            </div>
+
+			</form>
+
+
+</div>
+ <div class="copy-rights">
+					<p>我们的售卖机</p>
+			</div>
+
+
+</div>
+{% endblock %}
+
+

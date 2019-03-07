@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Flasky{% endblock %}
+{% block page_content %}
+<div class = "page-header">
+    <h1>欢迎进入售卖机管理系统</h1>
+    <p>现在时间是: {{ moment().format('YYYY年M月D日, h:mm:ss a') }}.</p>{#format代表日期格式#}
+    <p>已经过去了: {{ moment().fromTime(current_time) }}.</p>
+    <p>{{ moment().calendar() }}.</p>
+    {% for msg in get_flashed_messages()  %}
+        <p class="login-box-msg" style="color: crimson">{{ msg }}</p>
+{% endfor %}     {# flash的前端闪现 登出#}
+</div>
+{% endblock %}

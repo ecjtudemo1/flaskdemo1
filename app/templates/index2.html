@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}售卖机{% endblock %}
+{% block head %}
+{{ super() }}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="imagetoolbar" content="no" />
+<link rel="stylesheet" href="{{ url_for('static',filename='css/layout.css') }}" type="text/css" />
+{#<link rel="stylesheet" href="{{ url_for('static',filename='featured_slide.css') }}" type="text/css"/>#}
+<script type="text/javascript" src="{{ url_for('static',filename='css/jquery-1.4.3.min.js') }}"></script>
+{#<script type="text/javascript" src="{{ url_for('static',filename='jquery.s3slider.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='jquery.s3slider.setup.js') }}"></script>#}
+{% endblock %}
+{% block page_content  %}
+<div id="top">
+
+    <p>现在时间是: {{ moment().format('YYYY年M月D日, h:mm:ss a') }}.</p>{#format代表日期格式#}
+    <p>已经过去了: {{ moment().fromTime(current_time) }}.</p>
+    <p>{{ moment().calendar() }}.</p>
+    {% for msg in get_flashed_messages()  %}
+        <p class="login-box-msg" style="color: crimson">{{ msg }}</p>
+{% endfor %}     {# flash的前端闪现 登出#}
+<div class="wrapper col1">
+  <div id="header">
+
+    <div class="fl_left">
+      <h1><a href="#">售卖机管理系统</a></h1>
+    </div>
+    <br class="clear" />
+  </div>
+</div>
+
+<!-- ####################################################################################################### -->
+ <a href="{{ url_for('.admin') }}"><img src="{{ url_for('static', filename='smj.jpg') }}" width="1150" height="1050"></a>
+
+</div>
+<!-- ####################################################################################################### -->
+
+
+
+
+
+{% endblock %}
+

@@ -1,0 +1,62 @@
+{% extends "base.html" %}  {#货物信息页面#}
+{% block title %}货物信息{% endblock %}
+{% block head %}
+    {{ super() }}
+<meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="{{ url_for('static', filename='js/echarts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-1.4.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/total_style.css') }}" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0">
+		<!-- Start css3menu.com HEAD section -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/menustyle.css')  }}" type="text/css" /><style type="text/css">._css3m{display:none}</style>
+	<!-- End css3menu.com HEAD section -->
+    <script src="{{ url_for('static', filename='js/total_script.js') }}"></script>
+
+{% endblock %}
+{% block page_content %}
+    <div style="background-color:dimgray">
+<!-- Start css3menu.com BODY section -->
+<input type="checkbox" id="css3menu-switcher" class="c3m-switch-input">
+<ul id="css3menu2" class="topmenu">
+	<li class="switch"><label onclick="" for="css3menu-switcher"></label></li>
+	<li class="topmenu"><a href="{{ url_for('main.daily_monitor') }}" style="height:25px;line-height:16px;cursor: pointer">日运行监控</a></li>
+	<li class="topmenu"><a href="{{ url_for('main.data_analysis') }}" style="height:30px;line-height:16px;cursor: pointer;background-color: pink">数据的分析</a></li>
+	<li class="topmenu"><a href="{{ url_for('main.admin') }}" style="height:40px;line-height:16px;cursor: pointer">货物剩余量</a></li>
+	<li class="topmenu"><a href="{{ url_for('main.Data_visualization') }}" style="height:30px;line-height:16px;cursor: pointer">数据可视化</a></li>
+	<li class="toplast"><a href="{{ url_for('main.Commodity_management') }}" style="height:25px;line-height:16px;cursor: pointer">售卖机的管理与支付信息</a></li>
+</ul><p class="_css3m"><a href="http://css3menu.com/">drop down menu</a> by Css3Menu.com</p>
+<!-- End css3menu.com BODY section -->
+
+</div>
+<div class="data-analysis" style="margin-right: 150px">
+   <p style="font-size: large;text-align: center;color: #1b6d85">连单率:</p>
+    <p style="color: #761c19;text-align: center;font-size: 40px">23%</p>
+</div>
+<div class="data-analysis" style="margin-right: 150px">
+   <p style="font-size: large;text-align: center;color: #1b6d85">客单价:</p>
+    <p style="color: #761c19;text-align: center;font-size: 40px">￥234</p>
+</div>
+    <div class="data-analysis">
+   <p style="font-size: large;text-align: center;color: #1b6d85">存销比:</p>
+    <p style="color: #761c19;text-align: center;font-size: 40px">23%</p>
+</div>
+    <div id="model-analysis" style="margin-top: 25px;color: #761c19; text-align: center;">
+{# 线性回归的拟合 ？？？？？？？？？？？？？/#}
+        <h1>线性回归</h1>
+    </div>
+<div style="clear: both"></div>
+<hr>
+<div >
+<div style="font-weight: bold">
+	<p >
+	<span style="color: #761c19">2019 &copy;</span>
+    <p style="color: #761c19 "><b>售卖机管理系统</b></p>
+</div>
+</div>
+
+
+{% endblock %}

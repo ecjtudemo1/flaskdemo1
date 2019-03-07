@@ -1,0 +1,68 @@
+
+body{
+	background: #383838 no-repeat 0 0;
+	font-family: 'Open Sans', sans-serif;
+	background-size:cover;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+}
+.zuocedaohang{
+	width: 100%;
+	height: 100%;
+	/*background-size: cover;*/
+
+}
+.thefirstdaohang {
+    color: #FFFF00;
+}
+.tables {
+	width: 100%;
+    color: ghostwhite;
+    border: 1px;
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+    border-color: #999999;
+    border-collapse: collapse;
+}
+.tables th{
+    background:#b5cfd2 url('../4.jpg');
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #999999;
+}
+.tables td{
+    background:#dcddc0 url('../bg2.jpg');
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #999999;
+}
+.datashow{
+    background-color: grey;
+    border-radius: 100px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    width: 280px;
+    height: 100px;
+    float: left;
+    margin-top: 10px;
+}
+.table-check {
+    color: ghostwhite;
+}
+.data-analysis{
+    background-color: grey;
+    border-radius: 50px;
+    width: 280px;
+    height: 100px;
+    float: left;
+}
+#model-analysis{
+    background-color: darkgrey;
+    border-radius: 50px;
+    width: 1150px;
+    height: 1000px;
+    float: left;
+}

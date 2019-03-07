@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}售卖机{% endblock %}
+{% block head %}
+{{ super() }}
+
+
+<title>Gallerised | Gallery</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="imagetoolbar" content="no" />
+<link rel="stylesheet" href="{{ url_for('static',filename='layout.css') }}" type="text/css" />
+<link rel="stylesheet" href="{{ url_for('static',filename='featured_slide.css') }}" type="text/css"/>
+<!-- FancyBox --><script type="text/javascript" src="{{ url_for('static',filename='jquery-1.4.3.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.mousewheel-3.0.4.pack.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.fancybox-1.3.2.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.fancybox-1.3.2.setup.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='jquery.fancybox-1.3.2.css') }}" type="text/css" />
+<!-- End FancyBox -->
+{% endblock %}
+{% block page_content %}
+<div class = "page-header" id="top">
+<p>现在时间是: {{ moment().format('YYYY年M月D日, h:mm:ss a') }}.</p>{#format代表日期格式#}
+    <p>已经过去了: {{ moment().fromTime(current_time) }}.</p>
+    <p>{{ moment().calendar() }}.</p>
+    {% for msg in get_flashed_messages()  %}
+        <p class="login-box-msg" style="color: crimson">{{ msg }}</p>
+{% endfor %}     {# flash的前端闪现 登出#}
+<div class="wrapper col1">
+  <div id="header">
+
+    <br class="clear" />
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+<div class="wrapper col3">
+  <div id="breadcrumb">
+    <ul>
+      <li class="first">You Are Here</li>
+      <li>&#187;</li>
+      <li><a href="#">Home</a></li>
+      <li>&#187;</li>
+      <li><a href="#">Grand Parent</a></li>
+      <li>&#187;</li>
+      <li><a href="#">Parent</a></li>
+      <li>&#187;</li>
+      <li class="current"><a href="#">Child</a></li>
+    </ul>
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+<div class="wrapper col4">
+  <div id="container">
+    <div class="gallery">
+      <h2>Gallery Category Title</h2>
+      <ul>
+        <li><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 1"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+        <li><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 2"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+        <li><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 3"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+        <li><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 4"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+        <li class="last"><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 5"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+        <li><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 6"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+        <li><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 7"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+        <li><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 8"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+        <li><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 9"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+        <li class="last"><a rel="gallery_group" href="{{ url_for('static', filename='500x500.gif') }}" title="Image 10"><img src="{{ url_for('static', filename='174x174.gif') }}" alt="" /></a></li>
+      </ul>
+      <br class="clear" />
+    </div>
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+
+</div>
+{% endblock %}

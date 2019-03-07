@@ -1,0 +1,349 @@
+{% extends "base.html" %}  {#货物信息页面#}
+{% block title %}货物信息{% endblock %}
+{% block head %}
+    {{ super() }}
+<meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="{{ url_for('static', filename='js/echarts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/total_style.css') }}" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0">
+		<!-- Start css3menu.com HEAD section -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/menustyle.css')  }}" type="text/css" /><style type="text/css">._css3m{display:none}</style>
+	<!-- End css3menu.com HEAD section -->
+    <script src="{{ url_for('static', filename='js/total_script.js') }}"></script>
+<script src="https://cdn.bootcss.com/socket.io/2.1.1/socket.io.dev.js"></script>
+{% endblock %}
+{% block page_content %}
+    <div style="background-color:dimgray">
+<!-- Start css3menu.com BODY section -->
+<input type="checkbox" id="css3menu-switcher" class="c3m-switch-input">
+<ul id="css3menu2" class="topmenu">
+	<li class="switch"><label onclick="" for="css3menu-switcher"></label></li>
+	<li class="topmenu"><a href="{{ url_for('main.daily_monitor') }}" style="height:25px;line-height:16px;cursor: pointer">日运行监控</a></li>
+	<li class="topmenu"><a href="{{ url_for('main.data_analysis') }}" style="height:30px;line-height:16px;cursor: pointer">数据的分析</a></li>
+	<li class="topmenu"><a href="{{ url_for('main.admin') }}" style="height:40px;line-height:16px;cursor: pointer">货物剩余量</a></li>
+	<li class="topmenu"><a href="{{ url_for('main.Data_visualization') }}" style="height:30px;line-height:16px;cursor: pointer;background-color: pink">数据可视化</a></li>
+	<li class="toplast"><a href="{{ url_for('main.Commodity_management') }}" style="height:25px;line-height:16px;cursor: pointer">售卖机的管理与支付信息</a></li>
+</ul><p class="_css3m"><a href="http://css3menu.com/">drop down menu</a> by Css3Menu.com</p>
+<!-- End css3menu.com BODY section -->
+
+</div>
+<div class="clear"></div>
+<div class="zuocedaohang" >
+    <div id="main1" style="width: 600px;height:400px; float: left ;margin-right: 100px"></div>{#chart的容器#}
+<script type="text/javascript">{#数据可视化，数据分析#}{#条形图的代码#}
+    var myChart = echarts.init(document.getElementById('main1'), 'light');
+    var main = {
+        xday:[],
+        yvalue:[]
+    };
+    myChart.showLoading();
+    // 发送ajax请求，从后台获取json数据
+    $(document).ready(function () {
+       getData();
+       console.log(main.xday);
+       console.log(main.yvalue)
+    });
+    function getData() {
+         $.ajax({
+            url:'/data_get',
+            data:{},
+            type:'POST',
+            async:false,
+            dataType:'json',
+            success:function(data) {
+                main.xday = data.xday;
+                main.yvalue = data.yvalue;
+                myChart.hideLoading();
+                myChart.setOption({
+                    textStyle: {
+                        color: 'rgba(255, 255, 255, 1)',
+                        fontStyle:'oblique',
+                        fontWeight:'bolder',
+                        fontFamily:'Arial',
+                        fontSize: 20
+                    },
+                    color:['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',
+                            '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+                    title: {
+                        textStyle: {
+                            color: 'rgba(255, 255, 255, 1)'
+                        },
+                        text: '货物信息'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['销量']
+                    },
+                    xAxis: {
+                        name: '货物种类',
+                        data: main.xday
+                    },
+                    yAxis: {
+                        name : '销量'
+                    },
+                    series: [{
+                        name: '销量',
+                        type: 'bar',
+                        data: main.yvalue
+                    }]
+                })
+            },
+            error:function (msg) {
+                console.log(msg);
+                alert('系统发生错误');
+            }
+        })
+    }
+    </script>
+
+
+ <div id="main2" style="width: 400px;height:400px; float: left"></div>{#第2个图表的容器#}
+<script type="text/javascript">{#旭日图的代码,数据未传入？？？？？？？？？？？？？？？？？？？？？？？#}
+    var myCharts = echarts.init(document.getElementById('main2'), 'light');
+    var option = {
+    series: {
+        type: 'sunburst',
+        data: [{
+            name: '汽水类',
+            value: 10,
+            children: [{
+                value: 3,
+                name: '可乐'
+            }, {
+                value: 7,
+                name: '雪碧'
+            }]
+        }, {
+            name: '果汁类',
+            children: [{
+                name: '鲜橙多',
+                value: 4
+            }, {
+                name: '果粒橙',
+                value: 2
+            }]
+        }, {
+            name: '其他',
+            value: 3,
+            children:[{
+                name:'绿茶',
+                value:2
+            },{
+                name:'矿泉水',
+                value:'1'
+            }]
+        }]
+    }
+};
+    myCharts.setOption(option);
+</script>
+</div>
+
+    <div id="main3" style="width: 400px;height:400px; float: left; margin-right: 200px; margin-left: 50px"></div>{#第3个图表的容器#}
+    <script>
+    var myChartss = echarts.init(document.getElementById('main3'), 'light');
+    myChartss.setOption({
+        textStyle: {
+                        color: 'white',
+                        fontStyle:'oblique',
+                        fontWeight:'bolder',
+                        fontFamily:'Arial',
+                        fontSize: 20
+                    },
+        title: {
+            text: '人流量走势图',
+            backgroundColor: 'white'
+        },
+        tooltip: {},
+        legend: {
+            data:['visitors_flowrate']
+        },
+        xAxis: {
+             boundaryGap: false,
+            data: []
+        },
+        yAxis: {
+        },
+        series: [{
+            name: 'time',
+            type: 'line',
+            data: [],
+             areaStyle: {}
+        }]
+    });
+
+    var times = ["", "", "", "" ,"", "", "", "", "", ""],
+     visitors_flowrate = [0,0,0,0,0,0,0,0,0,0];
+
+ var update_mychart = function (res) {
+    //res是json格式的response对象
+
+        // 隐藏加载动画
+        myChartss.hideLoading();
+
+        // 准备数据
+        times.push(res.data[0]);
+        visitors_flowrate.push(parseFloat(res.data[1]));
+        if (times.length >= 10){
+            times.shift();
+            visitors_flowrate.shift();
+        }
+
+        // 填入数据
+        myChartss.setOption({
+            xAxis: {
+                data: times
+            },
+            series: [{
+                name: '人流量', // 根据名字对应到相应的系列
+                data: visitors_flowrate
+            }]
+        });
+
+    };
+
+    // 首次显示加载动画
+    myChartss.showLoading();
+    // 建立socket连接，等待服务器“推送”数据，用回调函数更新图表
+    $(document).ready(function() {
+        namespace = '/websocket/user_refresh';
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+
+        socket.on('user_response', function(res) {
+            update_mychart(res);
+        });
+
+    });
+</script>
+
+
+    {#<script>
+        var socket = io('http://127.0.0.1:5000/websocket/user_refresh');
+        socket.on('connect', function() { // 发送到服务器的通信内容
+        socket.emit('connect_event', {data: '我已连接上服务端！'});
+    });
+
+    socket.on('server_response', function(msg) {
+        //显示接受到的通信内容，包括服务器端直接发送的内容和反馈给客户端的内容
+        console.log(msg);
+    });
+    socket.on('user_response', function(msg) {
+        // 获取后端传过来的业务数据
+        var obj = eval(msg.data[0]);
+        console.log(obj);
+    });
+    </script>#}
+
+
+    <div id="main4" style="width: 400px;height:400px; float: left"></div>{#第4个图表的容器#}
+    <script>
+    var myCharts = echarts.init(document.getElementById('main4'), 'light');
+    var base = +new Date(2018, 9, 3);
+var oneDay = 24 * 3600 * 1000;
+var date = [];
+
+var data = [Math.random() * 300];
+
+for (var i = 1; i < 2000; i++) {
+    var now = new Date(base += oneDay);
+    date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+    data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
+}
+
+option = {
+    textStyle: {
+                        color: 'white',
+                        fontStyle:'oblique',
+                        fontWeight:'bolder',
+                        fontFamily:'Arial',
+                        fontSize: 20
+                    },
+    tooltip: {
+        trigger: 'axis',
+        position: function (pt) {
+            return [pt[0], '10%'];
+        }
+    },
+    title: {
+        textStyle: {
+                            color: 'rgba(255, 255, 255, 1)'
+                        },
+        left: 'center',
+        text: '历史销量数据图'
+    },
+    toolbox: {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: date
+    },
+    yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%']
+    },
+    dataZoom: [{
+        type: 'inside',
+        start: 0,
+        end: 10
+    }, {
+        start: 0,
+        end: 10,
+        handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+        handleSize: '80%',
+        handleStyle: {
+            color: '#fff',
+            shadowBlur: 3,
+            shadowColor: 'rgba(0, 0, 0, 0.6)',
+            shadowOffsetX: 2,
+            shadowOffsetY: 2
+        }
+    }],
+    series: [
+        {
+            name:'模拟数据',
+            type:'line',
+            smooth:true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(255, 70, 131)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(255, 158, 68)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(255, 70, 131)'
+                }])
+            },
+            data: data
+        }
+    ]
+};
+    myCharts.setOption(option);
+    </script>
+    <div style="clear:both"></div>
+    <hr>
+<div >
+<div style="font-weight: bold">
+	<p >
+	<span style="color: #761c19">2019 &copy;</span>
+    <p style="color: #761c19 ">售卖机管理系统</p>
+</div>
+</div>
+
+{% endblock %}
+

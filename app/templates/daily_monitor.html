@@ -1,0 +1,140 @@
+{% extends "base.html" %}  {#货物信息页面#}
+{% block title %}货物信息{% endblock %}
+{% block head %}
+    {{ super() }}
+<meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="{{ url_for('static', filename='js/echarts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-1.4.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/total_style.css') }}">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0">
+	<title>css3menu.com</title>
+		<!-- Start css3menu.com HEAD section -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/menustyle.css')  }}" type="text/css" /><style type="text/css">._css3m{display:none}</style>
+	<!-- End css3menu.com HEAD section -->
+{% endblock %}
+{% block page_content %}
+
+    <div style="background-color:grey">
+<!-- Start css3menu.com BODY section -->
+<input type="checkbox" id="css3menu-switcher" class="c3m-switch-input">
+<ul id="css3menu2" class="topmenu" >
+	<li class="switch"><label onclick="" for="css3menu-switcher"></label></li>
+	<li class="topmenu"><a href="{{ url_for('main.daily_monitor') }}" style="height:25px;line-height:16px;cursor: pointer;background-color: pink">日运行监控</a></li>
+	<li class="topmenu"><a href="{{ url_for('main.data_analysis') }}" style="height:30px;line-height:16px;cursor: pointer">数据的分析</a></li>
+	<li class="topmenu"><a href="{{ url_for('main.admin') }}" style="height:40px;line-height:16px;cursor: pointer">货物剩余量</a></li>
+	<li class="topmenu"><a href="{{ url_for('main.Data_visualization') }}" style="height:30px;line-height:16px;cursor: pointer">数据可视化</a></li>
+	<li class="toplast"><a href="{{ url_for('main.Commodity_management') }}" style="height:25px;line-height:16px;cursor: pointer">售卖机的管理与支付信息</a></li>
+</ul><p class="_css3m"><a href="http://css3menu.com/">drop down menu</a> by Css3Menu.com</p>
+<!-- End css3menu.com BODY section -->
+</div>
+<div class="datashow">{#利用js来完成数据的输入？？？？？？？？？？？？？？？？#}
+    <p style="font-size: large;text-align: center;color: #1b6d85">今日销售额:</p>
+    <p style="color: #761c19;text-align: center;font-size: 40px">￥3433</p>
+</div>
+<div class="datashow">
+   <p style="font-size: large;text-align: center;color: #1b6d85">昨日销售额:</p>
+    <p style="color: #761c19;text-align: center;font-size: 40px">￥3433</p>
+</div>
+<div class="datashow">
+   <p style="font-size: large;text-align: center;color: #1b6d85">本周销售额:</p>
+     <p style="color: #761c19;text-align: center;font-size: 40px">￥12312</p>
+</div>
+<div class="datashow">
+   <p style="font-size: large;text-align: center;color: #1b6d85">本月销售额:</p>
+     <p style="color: #761c19;text-align: center;font-size: 40px">￥32422</p>
+</div>
+<div class="datashow">
+   <p style="font-size: large;text-align: center;color: #1b6d85">在线模块数:</p>
+     <p style="color: #761c19;text-align: center;font-size: 40px">10</p>
+</div>
+<div class="datashow">
+   <p style="font-size: large;text-align: center;color: #1b6d85">离线模块数:</p>
+     <p style="color: #761c19;text-align: center;font-size: 40px">0</p>
+</div>
+<div class="datashow">
+   <p style="font-size: large;text-align: center;color: #1b6d85">缺货商品数:</p>
+     <p style="color: #761c19;text-align: center;font-size: 40px">3</p>
+</div>
+<div class="datashow">
+   <p style="font-size: large;text-align: center;color: #1b6d85">故障模块数:</p>
+     <p style="color: #761c19;text-align: center;font-size: 40px">3</p>
+</div>
+<div id="main1" style="width: 1130px;height:550px; float: left ;margin-right: 100px; margin-top: 25px"></div>{#chart的容器#}
+<script type="text/javascript">{#数据可视化，数据分析#}{#折线图的代码#}
+    var myChart = echarts.init(document.getElementById('main1'), 'light');
+    var main = {
+        xday:[],
+        yvalue:[]
+    };
+    myChart.showLoading();
+    // 发送ajax请求，从后台获取json数据
+    $(document).ready(function () {
+       getData();
+       console.log(main.xday);
+       console.log(main.yvalue)
+    });
+    function getData() {
+         $.ajax({
+            url:'/data_get1',
+            data:{},
+            type:'POST',
+            async:false,
+            dataType:'json',
+            success:function(data) {
+                main.xday = data.xday;
+                main.yvalue = data.yvalue;
+                myChart.hideLoading();
+                myChart.setOption({
+                    textStyle: {
+                        color: 'rgba(255, 255, 255, 0.3)',
+                        fontStyle:'oblique',
+                        fontWeight:'bolder',
+                        fontFamily:'Arial',
+                        fontSize: 20
+                    },
+                    color:['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',
+                            '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+                    title: {
+                        text: '一周销量'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['销售额']
+                    },
+                    xAxis: {
+                        name: '星期',
+                        data: main.xday
+                    },
+                    yAxis: {
+                        name : '销售额'
+                    },
+                    series: [{
+                        name: '销售额',
+                        type: 'line',
+                        data: main.yvalue
+                    }]
+                })
+            },
+            error:function (msg) {
+                console.log(msg);
+                alert('系统发生错误');
+            }
+        })
+    }
+    </script>
+<div style="clear:both"></div>
+
+    <hr>
+<div >
+<div >
+	<p>
+        <span style="color: #761c19"><b>2019 &copy;</b></span>
+    <p style="color: #761c19 "><b>售卖机管理系统</b></p>
+
+</div>
+</div>
+{% endblock %}
+
